@@ -7,6 +7,9 @@ type DialogItemPropsType = {
     name: string
     id: number
 }
+type MessagePropsType = {
+    dialog: string
+}
 
 function DialogItem(props: DialogItemPropsType) {
     return (
@@ -15,36 +18,44 @@ function DialogItem(props: DialogItemPropsType) {
     );
 }
 
-
-type MessagePropsType = {
-    dialog: string
-}
-
 function Message(props: MessagePropsType) {
     return (
         <div className={s.dialog}>{props.dialog}</div>
     );
 }
 
-
 function Dialogs(props: any) {
+
+    const dialogs = [
+        {id: 1, name: 'Hanna'},
+        {id: 2, name: 'Kira'},
+        {id: 3, name: 'Tim'},
+        {id: 4, name: 'Sasha'},
+        {id: 5, name: 'Anna'},
+        {id: 6, name: 'Ali'}
+    ]
+
+    const messages = [
+        {id: 1, message: 'Hi'},
+        {id: 2, message: 'How are you?!'},
+        {id: 3, message: 'Hi, my dear!'},
+        {id: 4, message: 'Where are you?'}
+    ]
+
+    let dialogsElements = dialogs
+        .map(d => (<DialogItem name={d.name} id={d.id}/>));
+
+    let messagesElements = messages.map(m => (<Message dialog={m.message}/>));
+
+
     return (
         <div className={s.dialogs}>
-
             <div className={s.dialogsItems}>
-                <DialogItem name='Hanna' id={1}/>
-                <DialogItem name='Kira' id={2}/>
-                <DialogItem name='Tim' id={3}/>
-                <DialogItem name='Sasha' id={4}/>
-                <DialogItem name='Anna' id={5}/>
-                <DialogItem name='Ali' id={6}/>
+                {dialogsElements}
             </div>
 
             <div className={s.messages}>
-                <Message dialog='Hi'/>
-                <Message dialog='Hoe are you?!'/>
-                <Message dialog='Hi, my dear!'/>
-                <Message dialog='Where are you?'/>
+                {messagesElements}
             </div>
 
         </div>
