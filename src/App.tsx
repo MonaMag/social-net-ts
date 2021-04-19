@@ -8,33 +8,30 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import {DialogItemPropsType, MessagePropsType, PostPropsType} from "./index";
+import {RootStateType} from './redux/state';
 
 
-type PropsType = {
-    posts: Array<PostPropsType>
-    messages: Array<MessagePropsType>
-    dialogs: Array<DialogItemPropsType>
+type AppPropsType = {
+    state: RootStateType
 }
 
-
-function App(props:PropsType) {
+function App(props: AppPropsType) {
     return (
-        <BrowserRouter>
         <div className='app-wrapper'>
             <Header/>
             <Navbar/>
             <div className='app-wrapper-content'>
-                <Route path='/profile' render={ () => <Profile posts={props.posts}/> } />
-                <Route path='/dialogs' render={ () => <Dialogs dialogs={props.dialogs} messages={props.messages}/> } />
+                <Route path='/profile'
+                       render={() => <Profile state={props.state.profilePage}/>}/>
+                <Route path='/dialogs'
+                       render={() => <Dialogs state={props.state.dialogsPage}/>}/>
 
-                <Route path='/news' render={ () => <News/> } />
-                <Route path='/music' render={ () => <Music/> } />
-                <Route path='/settings' render={ () => <Settings/> } />
-
+                <Route path='/news' render={() => <News/>}/>
+                <Route path='/music' render={() => <Music/>}/>
+                <Route path='/settings' render={() => <Settings/>}/>
             </div>
         </div>
-        </BrowserRouter>);
+    )
 }
 
 export default App;
