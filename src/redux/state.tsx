@@ -52,16 +52,15 @@ type  UpdateNewPostActionType = ReturnType<typeof  changeNewTextAC>
 export type ActionsType = ReturnType<typeof  addPostAC> | ReturnType<typeof  changeNewTextAC>
 
 
-export const addPostAC = ( postMessage: string) => {
+export const addPostAC = ( text: string) => {
     return {
-        type: 'ADD-POST',
-        postMessage: postMessage
+        type: 'ADD-POST'
     } as const
 }
-export const changeNewTextAC = ( postMessage: string) => {
+export const changeNewTextAC = ( text: string) => {
     return {
         type: 'UPDATE-NEW-POST-TEXT',
-        newText: postMessage
+        newText: text
     } as const
 }
 
@@ -107,7 +106,7 @@ export const store = {
         if (action.type === 'ADD-POST') {
             const newPost: PostPropsType = {
                 id: 5,
-                message: action.postMessage,
+                message: this._state.profilePage.newPostText,
                 likesCount: 0
             };
             this._state.profilePage.posts.push(newPost);

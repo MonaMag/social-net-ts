@@ -1,38 +1,39 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {ActionsType, addPostAC, changeNewTextAC, PostPropsType} from "../../../redux/state";
+import {ActionsType, addPostAC, changeNewTextAC, PostPropsType, ProfilePageType} from "../../../redux/state";
 
 
-type PropsType = {
-    posts: Array<PostPropsType>
+type MyPostsPropsType = {
+    profilePage: ProfilePageType
     newPostText: string
     /*addPost: (postMessage: string) => void
     updateNewPostText: (newText: string) => void*/
     dispatch: (action:ActionsType) => void
 }
 
-function MyPosts(props: PropsType) {
+function MyPosts(props: MyPostsPropsType) {
     let postsElements =
-        props.posts.map(p => <Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount}/>)
+        props.profilePage.posts.map(p => <Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount}/>)
 
-    let newPostElement = React.createRef<HTMLTextAreaElement>();
+    //let newPostElement = React.createRef<HTMLTextAreaElement>();
 
     const addPost = () => {
-        props.dispatch(addPostAC(props.newPostText));
-       // props.dispatch({type: "ADD-POST", postMessage: props.newPostText});
+        if(props.profilePage.newPostText.trim() !== '') {
+            props.dispatch({type: "ADD-POST"});
+        }
+       // props.dispatch(addPostAC(props.newPostText));
     }
 
-    const onPostChange = () => {
-        let text = newPostElement?.current?.value
-        props.dispatch(changeNewTextAC(text || ''))
+    const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        props.dispatch({type: "UPDATE-NEW-POST-TEXT", newText: e.currentTarget.value});
     }
 
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
             <div>
-                <div><textarea ref={newPostElement} onChange={ onPostChange } value={props.newPostText}/></div>
+                <div><textarea onChange={ onPostChange } value={props.profilePage.newPostText}/></div>
                 <div>
                     <button onClick={ addPost }>Add post</button>
                 </div>
