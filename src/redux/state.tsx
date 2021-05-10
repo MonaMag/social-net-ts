@@ -1,4 +1,3 @@
-
 export type PostPropsType = {
     id: number
     message: string
@@ -27,14 +26,47 @@ export type RootStateType = {
 
 export type StoreType = {
     _state: RootStateType
-    addPost: (postMessage: string) => void
-    updateNewPostText: (newText: string) => void
-    subscribe: () => void
+   /* addPost: (postMessage: string) => void
+    updateNewPostText: (newText: string) => void*/
+    getState: () => RootStateType
+    subscribe: (observer: () => void) => void
+    dispatch: (action: ActionsType) => void
 }
 
+/*
+export type AddPostActionType ={
+    type: 'ADD-POST'
+    postMessage: string
+}*/
+/*export type UpdateNewPostActionType ={
+    type: 'UPDATE-NEW-POST-TEXT'
+    newText: string
+}*/
 
-let store = {
-     _state: {
+type AddPostActionType = ReturnType<typeof  addPostAC>
+type  UpdateNewPostActionType = ReturnType<typeof  changeNewTextAC>
+
+
+//export type ActionsType = AddPostActionType | UpdateNewPostActionType
+// и теперь можем заменить конкотинацию след образом
+export type ActionsType = ReturnType<typeof  addPostAC> | ReturnType<typeof  changeNewTextAC>
+
+
+export const addPostAC = ( postMessage: string) => {
+    return {
+        type: 'ADD-POST',
+        postMessage: postMessage
+    } as const
+}
+export const changeNewTextAC = ( postMessage: string) => {
+    return {
+        type: 'UPDATE-NEW-POST-TEXT',
+        newText: postMessage
+    } as const
+}
+
+export const store = {
+    _state: {
         profilePage: {
             posts: [
                 {id: 1, message: 'Hi', likesCount: 12},
@@ -62,32 +94,35 @@ let store = {
         },
 
     },
-    getState() {
-        return this._state;
-    },
-    _callSubscriber (state:  RootStateType) {
+    _callSubscriber() {
         console.log('State changed')
     },
-    addPost (postMessage: string) {
-        let newPost: PostPropsType = {
-            id: 5,
-            message: this._state.profilePage.newPostText,
-            likesCount: 0
-        };
-        this._state.profilePage.posts.push(newPost);
-        this._state.profilePage.newPostText = '';
-        this._callSubscriber(this._state);
+    getState()   {
+        return this._state;
     },
-    updateNewPostText(newText: string) {
-        this._state.profilePage.newPostText = newText;
-        this._callSubscriber(this._state);
-    },
-    subscribe(observer: (state:RootStateType) => void) {
+    subscribe(observer: () => void) {
         this._callSubscriber = observer;
+    },
+    dispatch(action: ActionsType) {
+        if (action.type === 'ADD-POST') {
+            const newPost: PostPropsType = {
+                id: 5,
+                message: action.postMessage,
+                likesCount: 0
+            };
+            this._state.profilePage.posts.push(newPost);
+            this._state.profilePage.newPostText = '';
+
+
+        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+            this._state.profilePage.newPostText = action.newText;
+
+        }
+        this._callSubscriber();
     }
 
 }
 
 
-export default store;
+
 //window.store = store;
