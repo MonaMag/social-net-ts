@@ -15,7 +15,7 @@ function Profile(props: ProfilePropsType) {
         <div>
             <ProfileInfo/>
             <MyPosts profilePage={props.profilePage}
-                     newPostText={props.profilePage.newPostText}
+                    /* newPostText={props.profilePage.newPostText}*/
                      dispatch={props.dispatch} />
         </div>
     );

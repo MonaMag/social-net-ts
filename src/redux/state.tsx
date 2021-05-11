@@ -1,3 +1,8 @@
+
+
+const ADD_POST = 'ADD-POST';
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+
 export type PostPropsType = {
     id: number
     message: string
@@ -33,36 +38,11 @@ export type StoreType = {
     dispatch: (action: ActionsType) => void
 }
 
-/*
-export type AddPostActionType ={
-    type: 'ADD-POST'
-    postMessage: string
-}*/
-/*export type UpdateNewPostActionType ={
-    type: 'UPDATE-NEW-POST-TEXT'
-    newText: string
-}*/
-
 type AddPostActionType = ReturnType<typeof  addPostAC>
 type  UpdateNewPostActionType = ReturnType<typeof  changeNewTextAC>
-
-
-//export type ActionsType = AddPostActionType | UpdateNewPostActionType
-// и теперь можем заменить конкотинацию след образом
 export type ActionsType = ReturnType<typeof  addPostAC> | ReturnType<typeof  changeNewTextAC>
 
 
-export const addPostAC = ( text: string) => {
-    return {
-        type: 'ADD-POST'
-    } as const
-}
-export const changeNewTextAC = ( text: string) => {
-    return {
-        type: 'UPDATE-NEW-POST-TEXT',
-        newText: text
-    } as const
-}
 
 export const store = {
     _state: {
@@ -103,7 +83,7 @@ export const store = {
         this._callSubscriber = observer;
     },
     dispatch(action: ActionsType) {
-        if (action.type === 'ADD-POST') {
+        if (action.type === ADD_POST) {
             const newPost: PostPropsType = {
                 id: 5,
                 message: this._state.profilePage.newPostText,
@@ -113,15 +93,32 @@ export const store = {
             this._state.profilePage.newPostText = '';
 
 
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-            this._state.profilePage.newPostText = action.newText;
 
+        } else if (action.type === UPDATE_NEW_POST_TEXT) {
+            this._state.profilePage.newPostText = action.newText;
         }
         this._callSubscriber();
     }
-
 }
 
+
+
+export const addPostAC = ( text: string) => {
+    return {
+        type: 'ADD-POST'
+    } as const
+}
+export const changeNewTextAC = ( text: string) => {
+    return {
+        type: 'UPDATE-NEW-POST-TEXT',
+        newText: text
+    } as const
+}
+
+/*export const addPostActionCreator = () => ({type: ADD_POST})
+export const updateNewPostTextActionCreator = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    return {type: UPDATE_NEW_POST_TEXT, newText: e.currentTarget.value}
+}*/
 
 
 //window.store = store;
