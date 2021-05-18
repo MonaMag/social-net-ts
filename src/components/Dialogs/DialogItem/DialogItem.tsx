@@ -12,5 +12,5 @@ function DialogItem(props: DialogItemPropsType) {
     );
 }
 
-
 export default DialogItem;
+

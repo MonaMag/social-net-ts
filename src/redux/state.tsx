@@ -1,7 +1,9 @@
 
-
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
+const SEND_MESSAGE = 'SEND-MESSAGE';
+
 
 export type PostPropsType = {
     id: number
@@ -23,6 +25,8 @@ export type ProfilePageType = {
 export type DialogsPageType = {
     dialogs: Array<DialogItemPropsType>
     messages: Array<MessagePropsType>
+    newMessageBody: string
+
 }
 export type RootStateType = {
     profilePage: ProfilePageType
@@ -31,20 +35,24 @@ export type RootStateType = {
 
 export type StoreType = {
     _state: RootStateType
+    _callSubscriber: (state: RootStateType) => void
    /* addPost: (postMessage: string) => void
     updateNewPostText: (newText: string) => void*/
     getState: () => RootStateType
-    subscribe: (observer: () => void) => void
+    subscribe: (observer: (state: RootStateType) => void) => void
     dispatch: (action: ActionsType) => void
 }
 
+/*
 type AddPostActionType = ReturnType<typeof  addPostAC>
 type  UpdateNewPostActionType = ReturnType<typeof  changeNewTextAC>
-export type ActionsType = ReturnType<typeof  addPostAC> | ReturnType<typeof  changeNewTextAC>
+type  UpdateNewMessageActionType = ReturnType<typeof   updateMessageBodyAC>
+type  sendMessageActionType = ReturnType<typeof  sendMessageAC>
+*/
 
+export type ActionsType = ReturnType<typeof  addPostAC> | ReturnType<typeof  changeNewPostTextAC> |  ReturnType<typeof   updateMessageBodyAC> | ReturnType<typeof  sendMessageAC>
 
-
-export const store = {
+export const store: StoreType= {
     _state: {
         profilePage: {
             posts: [
@@ -53,7 +61,7 @@ export const store = {
                 {id: 3, message: 'Hi, my dear!', likesCount: 18},
                 {id: 4, message: 'Where are you!', likesCount: 25}
             ],
-            newPostText: 'it-kamasutra.com'
+            newPostText: ''
         },
         dialogsPage: {
             dialogs: [
@@ -69,7 +77,8 @@ export const store = {
                 {id: 2, message: 'How are you?!'},
                 {id: 3, message: 'Hi, my dear!'},
                 {id: 4, message: 'Where are you?'}
-            ]
+            ],
+            newMessageBody: ''
         },
 
     },
@@ -79,46 +88,59 @@ export const store = {
     getState()   {
         return this._state;
     },
-    subscribe(observer: () => void) {
+    subscribe(observer) {
         this._callSubscriber = observer;
     },
     dispatch(action: ActionsType) {
         if (action.type === ADD_POST) {
             const newPost: PostPropsType = {
-                id: 5,
+                id: this._state.profilePage.posts.length+1,
                 message: this._state.profilePage.newPostText,
-                likesCount: 0
-            };
+                likesCount: 0};
             this._state.profilePage.posts.push(newPost);
             this._state.profilePage.newPostText = '';
-
-
+            this._callSubscriber(this._state);
 
         } else if (action.type === UPDATE_NEW_POST_TEXT) {
             this._state.profilePage.newPostText = action.newText;
+            this._callSubscriber(this._state)
+
+        } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
+            this._state.dialogsPage.newMessageBody = action.body;
+            this._callSubscriber(this._state)
+
+        } else if(action.type === SEND_MESSAGE) {
+            let body = this._state.dialogsPage.newMessageBody;
+            this._state.dialogsPage.messages.push({id: 6, message: body});
+            this._state.dialogsPage.newMessageBody = '';
+            this._callSubscriber(this._state)
         }
-        this._callSubscriber();
     }
 }
 
-
-
-export const addPostAC = ( text: string) => {
+export const addPostAC = () => {
     return {
-        type: 'ADD-POST'
+        type: ADD_POST
     } as const
 }
-export const changeNewTextAC = ( text: string) => {
+export const changeNewPostTextAC = ( text: string) => {
     return {
-        type: 'UPDATE-NEW-POST-TEXT',
+        type: UPDATE_NEW_POST_TEXT,
         newText: text
     } as const
 }
 
-/*export const addPostActionCreator = () => ({type: ADD_POST})
-export const updateNewPostTextActionCreator = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    return {type: UPDATE_NEW_POST_TEXT, newText: e.currentTarget.value}
-}*/
+export const updateMessageBodyAC = ( body: string) => {
+    return {
+        type: UPDATE_NEW_MESSAGE_BODY,
+        body: body
+    } as const
+}
+export const sendMessageAC = () => {
+    return {
+        type: SEND_MESSAGE,
+    } as const
+}
 
 
 //window.store = store;

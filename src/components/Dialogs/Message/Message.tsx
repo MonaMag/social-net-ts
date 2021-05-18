@@ -3,10 +3,11 @@ import s from './../Dialogs.module.css';
 import {MessagePropsType} from "../../../redux/state";
 
 
-
 function Message(props: MessagePropsType) {
     return (
-        <div className={s.dialog}>{props.message}</div>
+        <div>
+            <div className={s.dialog}>{props.message}</div>
+        </div>
     );
 }
 
