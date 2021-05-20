@@ -25,18 +25,18 @@ export type DialogsPageType = {
     newMessageBody: string
 
 }
-export type RootStateType = {
+export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
 }
 
 export type StoreType = {
-    _state: RootStateType
-    _callSubscriber: (state: RootStateType) => void
+    _state: StateType
+    _callSubscriber: (state: StateType) => void
    /* addPost: (postMessage: string) => void
     updateNewPostText: (newText: string) => void*/
-    getState: () => RootStateType
-    subscribe: (observer: (state: RootStateType) => void) => void
+    getState: () => StateType
+    subscribe: (observer: (state: StateType) => void) => void
     dispatch: (action: ActionsType) => void
 }
 
@@ -77,7 +77,6 @@ export const store: StoreType= {
             ],
             newMessageBody: ''
         },
-
     },
     _callSubscriber() {
         console.log('State changed')

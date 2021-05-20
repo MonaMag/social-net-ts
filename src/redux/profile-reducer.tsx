@@ -1,11 +1,20 @@
-import {ActionsType, PostPropsType, ProfilePageType, RootStateType} from "./state";
-
+import {ActionsType, PostPropsType, ProfilePageType} from "./store";
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 
+const  initialState = {
+    posts: [
+        {id: 1, message: 'Hi', likesCount: 12},
+        {id: 2, message: 'How are you?!', likesCount: 20},
+        {id: 3, message: 'Hi, my dear!', likesCount: 18},
+        {id: 4, message: 'Where are you!', likesCount: 25}
+    ],
+        newPostText: ''
+};
 
-const profileReducer = (state: ProfilePageType, action: ActionsType) => {
+
+const profileReducer = (state: ProfilePageType = initialState, action: ActionsType) => {
 
     switch (action.type) {
         case ADD_POST:
