@@ -25,12 +25,16 @@ export type DialogsPageType = {
     newMessageBody: string
 
 }
+
+type SidebarType ={}
+
 export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
+    sidebar: SidebarType
 }
 
-export type StoreType = {
+export type MyStoreType = {
     _state: StateType
     _callSubscriber: (state: StateType) => void
    /* addPost: (postMessage: string) => void
@@ -49,7 +53,7 @@ type  sendMessageActionType = ReturnType<typeof  sendMessageAC>
 
 export type ActionsType = ProfileReducerActionType |  DialogsReducerActionType
 
-export const store: StoreType= {
+export const store: MyStoreType= {
     _state: {
         profilePage: {
             posts: [
@@ -77,6 +81,8 @@ export const store: StoreType= {
             ],
             newMessageBody: ''
         },
+        sidebar: {}
+
     },
     _callSubscriber() {
         console.log('State changed')
@@ -84,10 +90,10 @@ export const store: StoreType= {
     getState()   {
         return this._state;
     },
-    subscribe(observer) {
+    subscribe(observer: any) {
         this._callSubscriber = observer;
     },
-    dispatch(action: ActionsType) {
+    dispatch(action: any) {
         this._state.profilePage = profileReducer(this._state.profilePage, action);
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
         this._callSubscriber(this._state);

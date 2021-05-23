@@ -2,15 +2,14 @@ import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
 import {ActionsType, ProfilePageType} from "../../../redux/store";
-import {addPostAC, changeNewPostTextAC} from "../../../redux/profile-reducer";
+import {addPostAC, updateNewPostTextAC} from "../../../redux/profile-reducer";
 
 
 type MyPostsPropsType = {
     profilePage: ProfilePageType
-    /*newPostText: string*/
-    /*addPost: (postMessage: string) => void
-    updateNewPostText: (newText: string) => void*/
-    dispatch: (action:ActionsType) => void
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
+
 }
 
 function MyPosts(props: MyPostsPropsType) {
@@ -20,12 +19,12 @@ function MyPosts(props: MyPostsPropsType) {
     //let newPostElement = React.createRef<HTMLTextAreaElement>();
     const addPost = () => {
         if(props.profilePage.newPostText.trim() !== '') {
-            props.dispatch(addPostAC());
+            props.addPost();
         }
        // props.dispatch(addPostAC(props.newPostText));
     }
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(changeNewPostTextAC(e.currentTarget.value));
+        props.updateNewPostText(e.currentTarget.value);
     }
 
     return (

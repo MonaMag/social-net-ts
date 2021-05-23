@@ -1,14 +1,13 @@
 import reportWebVitals from './reportWebVitals';
-import {store} from "./redux/store";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import {BrowserRouter} from "react-router-dom";
-import { AppStateType } from './redux/redux-store';
+import store, {AppStateType} from './redux/redux-store';
 
 
- const rerenderEntireTree = (state: AppStateType) => {
+const rerenderEntireTree = (state: AppStateType) => {
     ReactDOM.render(
         <BrowserRouter>
             <App store={store}/>

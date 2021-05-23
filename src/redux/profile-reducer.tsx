@@ -1,9 +1,18 @@
-import {ActionsType, PostPropsType, ProfilePageType} from "./store";
-
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 
-const  initialState = {
+
+export type PostPropsType = {
+    id: number
+    message: string
+    likesCount: number
+}
+type initialStateType = {
+    posts: Array<PostPropsType>
+    newPostText: string
+}
+
+const  initialState: initialStateType = {
     posts: [
         {id: 1, message: 'Hi', likesCount: 12},
         {id: 2, message: 'How are you?!', likesCount: 20},
@@ -14,7 +23,7 @@ const  initialState = {
 };
 
 
-const profileReducer = (state: ProfilePageType = initialState, action: ActionsType) => {
+const profileReducer = (state: initialStateType = initialState, action:ProfileReducerActionType) => {
 
     switch (action.type) {
         case ADD_POST:
@@ -31,33 +40,16 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
         default:
             return state;
     }
-
-       /* if (action.type === ADD_POST) {
-            const newPost: PostPropsType = {
-                id: state.profilePage.posts.length+1,
-                message: state.profilePage.newPostText,
-                likesCount: 0};
-            state.profilePage.posts.push(newPost);
-            state.profilePage.newPostText = '';
-
-        } else if (action.type === UPDATE_NEW_POST_TEXT) {
-            state.profilePage.newPostText = action.newText;
-        }
-    return state;*/
 }
 
-export type ProfileReducerActionType = ReturnType<typeof  addPostAC> | ReturnType<typeof  changeNewPostTextAC>
 
-export const addPostAC = () => {
-    return {
-        type: ADD_POST
-    } as const
-}
-export const changeNewPostTextAC = ( text: string) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText: text
-    } as const
-}
+
+//Action creators
+
+export type ProfileReducerActionType = ReturnType<typeof  addPostAC> | ReturnType<typeof  updateNewPostTextAC>
+
+export const addPostAC = () => ({type: ADD_POST} as const)
+export const updateNewPostTextAC = ( text: string) => ({type: UPDATE_NEW_POST_TEXT, newText: text} as const)
+
 
 export default profileReducer;

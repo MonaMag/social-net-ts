@@ -1,9 +1,21 @@
-import {ActionsType, DialogsPageType} from "./store";
-
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 const SEND_MESSAGE = 'SEND-MESSAGE';
 
-const  initialState = {
+export type DialogItemPropsType = {
+    id: number
+    name: string
+}
+export type MessagePropsType = {
+    id: number
+    message: string
+}
+
+type initialStateType = {
+    dialogs: Array<DialogItemPropsType>
+    messages: Array<MessagePropsType>
+    newMessageBody: string
+}
+const  initialState: initialStateType = {
     dialogs: [
         {id: 1, name: 'Hanna'},
         {id: 2, name: 'Kira'},
@@ -21,7 +33,7 @@ const  initialState = {
     newMessageBody: ''
 }
 
-const dialogsReducer = (state: DialogsPageType = initialState , action: ActionsType) => {
+const dialogsReducer = (state: initialStateType = initialState , action: DialogsReducerActionType) => {
 
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY:
@@ -35,30 +47,15 @@ const dialogsReducer = (state: DialogsPageType = initialState , action: ActionsT
         default:
             return state;
     }
-
-    /* if (action.type === UPDATE_NEW_MESSAGE_BODY) {
-        state.dialogsPage.newMessageBody = action.body;
-
-    } else if(action.type === SEND_MESSAGE) {
-        let body = state.dialogsPage.newMessageBody;
-        state.dialogsPage.messages.push({id: 6, message: body});
-        state.dialogsPage.newMessageBody = '';
-    }
-    return state;*/
 }
+
+//Action creators
 
 export type DialogsReducerActionType = ReturnType<typeof updateMessageBodyAC> | ReturnType<typeof sendMessageAC>
 
-export const updateMessageBodyAC = ( body: string) => {
-    return {
-        type: UPDATE_NEW_MESSAGE_BODY,
-        body: body
-    } as const
-}
-export const sendMessageAC = () => {
-    return {
-        type: SEND_MESSAGE,
-    } as const
-}
+export const updateMessageBodyAC = ( body: string) => ({type: UPDATE_NEW_MESSAGE_BODY, body: body} as const)
+export const sendMessageAC = () => ({type: SEND_MESSAGE, } as const)
+
+
 
 export default dialogsReducer;
