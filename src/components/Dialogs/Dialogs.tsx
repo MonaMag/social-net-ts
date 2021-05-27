@@ -7,8 +7,8 @@ import {DialogsPageType} from "../../redux/store";
 
 type DialogsPropsType = {
     dialogsPage: DialogsPageType
-    sendMessage: () => void
-    NewMessageChange: (text: string) => void
+    sendMessage: (newMessageBody: string) => void
+    newMessageChange: (text: string) => void
 }
 
 function Dialogs(props: DialogsPropsType) {
@@ -19,11 +19,11 @@ function Dialogs(props: DialogsPropsType) {
 
 
     const onSendMessageClick = () => {
-        props.sendMessage()
+        props.sendMessage(newMessageBody)
     }
 
     const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.NewMessageChange(e.currentTarget.value)
+        props.newMessageChange(e.currentTarget.value)
     }
 
     return (
