@@ -15,7 +15,7 @@ export type initialStateType = {
     messages: Array<MessagePropsType>
     newMessageBody: string
 }
-const  initialState: initialStateType = {
+const initialState: initialStateType = {
     dialogs: [
         {id: 1, name: 'Hanna'},
         {id: 2, name: 'Kira'},
@@ -24,28 +24,32 @@ const  initialState: initialStateType = {
         {id: 5, name: 'Anna'},
         {id: 6, name: 'Ali'}
     ],
-        messages: [
-    {id: 1, message: 'Hi'},
-    {id: 2, message: 'How are you?!'},
-    {id: 3, message: 'Hi, my dear!'},
-    {id: 4, message: 'Where are you?'}
-],
+    messages: [
+        {id: 1, message: 'Hi'},
+        {id: 2, message: 'How are you?!'},
+        {id: 3, message: 'Hi, my dear!'},
+        {id: 4, message: 'Where are you?'}
+    ],
     newMessageBody: ''
 }
 
 //export type DialogsPageStateType = typeof initialState
 
-const dialogsReducer = (state: initialStateType = initialState , action: DialogsReducerActionType): initialStateType => {
+const dialogsReducer = (state: initialStateType = initialState, action: DialogsReducerActionType): initialStateType => {
+    let stateCopy = {
+        ...state,
+       messages: [...state.messages]
+    };
 
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY:
-            state.newMessageBody = action.body;
-            return state;
+            stateCopy.newMessageBody = action.body;
+            return stateCopy;
         case SEND_MESSAGE:
             const body = state.newMessageBody;
-            state.messages.push({id: 6, message: body});
-            state.newMessageBody = '';
-            return state;
+            stateCopy.messages.push({id: 6, message: body});
+            stateCopy.newMessageBody = '';
+            return stateCopy;
         default:
             return state;
     }
@@ -55,9 +59,8 @@ const dialogsReducer = (state: initialStateType = initialState , action: Dialogs
 
 export type DialogsReducerActionType = ReturnType<typeof updateMessageBodyAC> | ReturnType<typeof sendMessageAC>
 
-export const updateMessageBodyAC = ( body: string) => ({type: UPDATE_NEW_MESSAGE_BODY, body: body} as const)
-export const sendMessageAC = () => ({type: SEND_MESSAGE, } as const)
-
+export const updateMessageBodyAC = (body: string) => ({type: UPDATE_NEW_MESSAGE_BODY, body: body} as const)
+export const sendMessageAC = () => ({type: SEND_MESSAGE,} as const)
 
 
 export default dialogsReducer;

@@ -9,13 +9,15 @@ type MapStatePropsType = {
     posts: Array<PostPropsType>
     newPostText: string
 }
-
 type MapDispatchPropsType = {
     addPost: (newPostText: string) => void
     updateNewPostText: (text:string) => void
 }
 
-const mapStateToProps = (state: AppStateType): MapStatePropsType => {
+
+
+
+ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         posts: state.profilePage.posts,
         newPostText: state.profilePage.newPostText
