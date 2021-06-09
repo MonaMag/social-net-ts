@@ -40,9 +40,10 @@ function Users(props: UsersType) {
         )
     }
     return (
-        <div className={s.wrapper}>
+        <div>
             {
-                props.users.map(u => <div key={u.id}>
+                props.users.map(u => <div key={u.id} className={s.wrapper}>
+
                     <div>
                         <div>
                             <img src={u.photoUrl} className={s.userPhoto}/>
@@ -64,6 +65,7 @@ function Users(props: UsersType) {
                             <div>{u.location.city}</div>
                         </div>
                     </div>
+
                 </div>)
             }
         </div>
