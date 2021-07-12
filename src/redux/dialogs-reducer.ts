@@ -10,6 +10,11 @@ export type MessagePropsType = {
     message: string
 }
 
+export type DialogsPageType = {
+    dialogs: Array<DialogItemPropsType>
+    messages: Array<MessagePropsType>
+    newMessageBody: string
+}
 export type initialStateType = {
     dialogs: Array<DialogItemPropsType>
     messages: Array<MessagePropsType>
