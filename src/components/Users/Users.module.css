@@ -20,8 +20,8 @@
 }
 
 .userInfo {
-    width: 50%;
-    margin-left: 5%;
+    width: 600px;
+    margin-left: 50px;
     padding: 15px;
     display: flex;
     justify-content: space-between;
@@ -30,7 +30,7 @@
     font-size: 1.2em;
 }
 
-.userInfoPart {
+.userInfoItem {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -46,4 +46,8 @@
     font-weight: bold;
     font-size: 1.2em;
     color: coral;
+}
+
+.loader {
+    width: 50px;
 }

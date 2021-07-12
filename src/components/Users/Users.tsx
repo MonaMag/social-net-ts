@@ -44,11 +44,11 @@ const Users = (props: UsersPropsType) => {
                     </div>
 
                     <div className={s.userInfo}>
-                        <div className={s.userInfoPart}>
+                        <div className={s.userInfoItem}>
                             <div>{u.name}</div>
                             <div>{u.status}</div>
                         </div>
-                        <div className={s.userInfoPart}>
+                        <div className={s.userInfoItem}>
                             <div>{'u.location.country'}</div>
                             <div>{'u.location.city'}</div>
                         </div>
