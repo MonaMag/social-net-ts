@@ -2,7 +2,7 @@ import React from 'react';
 import s from "./Users.module.css";
 import usersDefaultAva from "../../assets/images/user.png";
 import {UserType} from "../../redux/users-reducer";
-import { NavLink } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 export type UsersPropsType = {
     users: Array<UserType>
@@ -30,34 +30,34 @@ const Users = (props: UsersPropsType) => {
                     >{p}</span>
                 })}
             </div>
-            {
-                props.users.map(u => <div key={u.id} className={s.wrapper}>
+
+            {props.users.map(u => <div key={u.id} className={s.wrapper}>
+                <div>
                     <div>
-                        <div>
-                            <NavLink to={'/profile'}>
-                                <img className={s.userPhoto}
-                                     src={u.photos.small != null ? u.photos.small : usersDefaultAva}/>
-                            </NavLink>
-                        </div>
-                        <div className={s.btn}>
-                            {u.followed
-                                ? <button onClick={() => props.unfollow(u.id)}>Unfollow</button>
-                                : <button onClick={() => props.follow(u.id)}>Follow</button>}
-                        </div>
+                        <NavLink to={'/profile/' + u.id}>
+                            <img className={s.userPhoto}
+                                 src={u.photos.small != null ? u.photos.small : usersDefaultAva}/>
+                        </NavLink>
                     </div>
-
-                    <div className={s.userInfo}>
-                        <div className={s.userInfoItem}>
-                            <div>{u.name}</div>
-                            <div>{u.status}</div>
-                        </div>
-                        <div className={s.userInfoItem}>
-                            <div>{'u.location.country'}</div>
-                            <div>{'u.location.city'}</div>
-                        </div>
+                    <div className={s.btn}>
+                        {u.followed
+                            ? <button onClick={() => props.unfollow(u.id)}>Unfollow</button>
+                            : <button onClick={() => props.follow(u.id)}>Follow</button>}
                     </div>
+                </div>
 
-                </div>)
+                <div className={s.userInfo}>
+                    <div className={s.userInfoItem}>
+                        <div>{u.name}</div>
+                        <div>{u.status}</div>
+                    </div>
+                    <div className={s.userInfoItem}>
+                        <div>{'u.location.country'}</div>
+                        <div>{'u.location.city'}</div>
+                    </div>
+                </div>
+
+            </div>)
             }
         </div>
     )

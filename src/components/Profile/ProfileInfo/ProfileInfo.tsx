@@ -9,19 +9,20 @@ type ProfileInfoPropsType = {
 }
 
 function ProfileInfo(props: ProfileInfoPropsType) {
-    if(!props.profile) {
+    if (!props.profile) {
         return <Preloader/>
     }
+    return (
+        <div>
+            {/*<img src='https://www.thinkingbusinessblog.com/wp-content/uploads/2014/12/step-up-1000x430.jpg'/>*/}
+            <div className={s.descriptionBlock}>
+                <img src={props.profile.photos.large}/>
+                <div>{props.profile.fullName}</div>
+                <div>{props.profile.aboutMe}</div>
 
-  return (
-      <div>
-        {/*<img src='https://www.thinkingbusinessblog.com/wp-content/uploads/2014/12/step-up-1000x430.jpg'/>*/}
-        <div className={s.descriptionBlock}>
-            <img src={props.profile.photos.large} />
-          <div>{props.profile.aboutMe}</div>
+            </div>
         </div>
-      </div>
-  );
+    );
 }
 
 export default ProfileInfo;
