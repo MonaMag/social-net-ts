@@ -8,5 +8,19 @@
     width: 60px;
 }
 
+.login {
+    float: right;
+    margin: 15px;
+    padding: 0;
+}
 
+.login a {
+    font-weight: bold;
+    color: black;
+    font-size: 1.3em;
+}
 
+.login a:hover {
+    color: coral;
+    transition: .5s;
+}
