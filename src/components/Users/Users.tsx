@@ -24,63 +24,64 @@ const Users = (props: UsersPropsType) => {
     }
     return (
         <div>
-            <div>
-                {pages.map(p => {
-                    return <span className={props.currentPage === p ? s.page + ' ' + s.selectedPage : s.page}
-                                 onClick={() => props.onPageChanged(p)}
-                    >{p}</span>
-                })}
+            <div>{pages.map(p => {
+                return <span
+                    className={props.currentPage === p ? s.page + ' ' + s.selectedPage : s.page}
+                    onClick={() => props.onPageChanged(p)}>{p}</span>
+            })}
             </div>
 
-            {props.users.map(u => <div key={u.id} className={s.wrapper}>
-                <div>
+            {props.users.map(u =>
+                <div key={u.id} className={s.wrapper}>
                     <div>
-                        <NavLink to={'/profile/' + u.id}>
-                            <img className={s.userPhoto} alt={'user'}
-                                 src={u.photos.small != null ? u.photos.small : usersDefaultAva}/>
-                        </NavLink>
-                    </div>
-                    <div className={s.btn}>
-                        {u.followed ?
+                        <div>
+                            <NavLink to={'/profile/' + u.id}>
+                                <img className={s.userPhoto} alt={'user'}
+                                     src={u.photos.small != null ? u.photos.small : usersDefaultAva}/>
+                            </NavLink>
+                        </div>
 
-                            <button onClick={() => {
-                                axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
-                                    {
-                                    withCredentials: true,
-                                    headers: {'API-KEY': '9b215882-6a46-48f3-ba59-705ff8d76e7b'}
-                                }).then(response => {
+                        <div className={s.btn}>
+                            {u.followed ?
+
+                                <button onClick={() => {
+                                    axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
+                                        {
+                                            withCredentials: true,
+                                            headers: {'API-KEY': '9b215882-6a46-48f3-ba59-705ff8d76e7b'}
+                                        }).then(response => {
                                         if (response.data.resultCode === 0) {
                                             props.unfollow(u.id)
                                         }
                                     });
-                            }}>Unfollow</button> :
+                                }}>Unfollow</button> :
 
-                            <button onClick={() => {
-                                axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {},
-                                    {
-                                    withCredentials: true,
-                                    headers: {'API-KEY': '9b215882-6a46-48f3-ba59-705ff8d76e7b'}
-                                }).then(response => {
+                                <button onClick={() => {
+                                    axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {},
+                                        {
+                                            withCredentials: true,
+                                            headers: {'API-KEY': '9b215882-6a46-48f3-ba59-705ff8d76e7b'}
+                                        }).then(response => {
                                         if (response.data.resultCode === 0) {
                                             props.follow(u.id)
                                         }
                                     });
-                            }}>Follow</button>}
+                                }}>Follow</button>}
+                        </div>
                     </div>
-                </div>
 
-                <div className={s.userInfo}>
-                    <div className={s.userInfoItem}>
-                        <div>{u.name}</div>
-                        <div>{u.status}</div>
+                    <div className={s.userInfo}>
+                        <div className={s.userInfoItem}>
+                            <div>{u.name}</div>
+                            <div>{u.status}</div>
+                        </div>
+                        <div className={s.userInfoItem}>
+                            <div>{'u.location.country'}</div>
+                            <div>{'u.location.city'}</div>
+                        </div>
                     </div>
-                    <div className={s.userInfoItem}>
-                        <div>{'u.location.country'}</div>
-                        <div>{'u.location.city'}</div>
-                    </div>
-                </div>
 
-            </div>)
+                </div>)
             }
         </div>
     )
