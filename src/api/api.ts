@@ -30,7 +30,7 @@ export const usersAPI = {
     getUserFollowing (userId: number) {
         return instance.post(`follow/${userId}`).then(response => response.data);
     },
-    getAuthMe() {
+    getAuthUser() {
         return instance.get(`auth/me`)
             .then(response => {
                 return response.data

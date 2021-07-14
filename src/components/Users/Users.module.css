@@ -10,13 +10,28 @@
     margin: 10px;
 }
 
-.btn button {
+.btn {
     width: 80px;
     height: 30px;
     border-radius: 8px;
     margin: 0px 10px 0px;
     color: white;
     background-color: dimgray;
+}
+
+/*btn:hover {
+    border: 1px solid #0099cc;
+    background-color: #00aacc;
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 5px 10px;
+}*/
+
+btn:disabled,
+button[disabled]{
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: dimgray;
 }
 
 .userInfo {

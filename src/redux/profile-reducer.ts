@@ -8,7 +8,6 @@ export type PostPropsType = {
     likesCount: number
 }
 
-
 export type ContactsType = {
     github: string
     vk: string
