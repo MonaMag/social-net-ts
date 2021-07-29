@@ -12,38 +12,45 @@ const instance = axios.create({
     withCredentials: true,
     baseURL: `https://social-network.samuraijs.com/api/1.0/`,
     headers: {
-        "API-KEY": "3af7a44d-0a6b-4bf7-b34b-b5730fa5756f"
+        "API-KEY": "d77a75fe-7115-4e50-afc0-bb6130f2edc0"
     }
 });
 
+
+//* Users Page API ===================================================================================>
 export const usersAPI = {
-    getUsers (currentPage = 1, pageSize = 10) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`).then(response => {
-            return response.data;
+    getUsers(currentPage = 1, pageSize = 10) {
+        return instance.get(`users?page=${currentPage}&count=${pageSize}`).then(res => {
+            return res.data;
         })
     },
 
-    getUserUnfollowing (userId: number) {
-        return instance.delete(`follow/${userId}`).then(response => response.data);
+    follow(userId: number) {
+        return instance.delete(`follow/${userId}`).then(res => res.data);
     },
 
-    getUserFollowing (userId: number) {
-        return instance.post(`follow/${userId}`).then(response => response.data);
+    unfollow(userId: number) {
+        return instance.post(`follow/${userId}`).then(res => res.data);
+    }
+}
+
+
+//* Profile Page API ==================================================================================>
+
+export const profileAPI = {
+    getUserProfile(userId: number) {
+        return instance.get(`profile/${userId}`).then(res => res.data);
     },
-    getAuthUser() {
-        return instance.get(`auth/me`)
-            .then(response => {
-                return response.data
-            });
+
+}
+
+
+//* Auth Page API ==================================================================================>
+
+export const authAPI = {
+    getAuthData() {
+        return instance.get(`auth/me`).then(res => res.data);
     },
 }
 
 
-/*
-export const getUsers = (currentPage = 1, pageSize = 10) => {
-    return axios.get<GetUsersRequestType>(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`,
-        {withCredentials: true}).then(response => {
-            return response.data;
-    })
-}
-*/
