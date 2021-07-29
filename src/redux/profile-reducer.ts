@@ -1,3 +1,6 @@
+import {Dispatch} from "redux";
+import { profileAPI } from "../api/api";
+
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET-USER-PROFILE';
@@ -50,7 +53,7 @@ const initialState: initialStateType = {
 };
 
 
-const profileReducer = (state: initialStateType = initialState, action: ProfileReducerActionType) => {
+const profileReducer = (state: initialStateType = initialState, action: ProfileReducerActionType): initialStateType  => {
     switch (action.type) {
         case ADD_POST: {
             const newPost: PostPropsType = {
@@ -82,13 +85,20 @@ const profileReducer = (state: initialStateType = initialState, action: ProfileR
 }
 
 
-//Action creators
+export type ProfileReducerActionType = ReturnType<typeof addPostAC> | ReturnType<typeof updateNewPostText> | ReturnType<typeof setUserProfile>
 
-export type ProfileReducerActionType = ReturnType<typeof addPostAC> | ReturnType<typeof updateNewPostTextAC> | ReturnType<typeof setUserProfile>
-
+//* ====== Action Creators =====================================================================================>
 export const addPostAC = () => ({type: ADD_POST} as const)
-export const updateNewPostTextAC = (text: string) => ({type: UPDATE_NEW_POST_TEXT, newText: text} as const)
+export const updateNewPostText = (text: string) => ({type: UPDATE_NEW_POST_TEXT, newText: text} as const)
 export const setUserProfile = (profile: UserProfileType) => ({type: SET_USER_PROFILE, profile} as const)
 
 
+//* ====== Thunk Creators ======================================================================================>
+
+export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
+    profileAPI.getProfile(userId)
+        .then(res => {
+            dispatch(setUserProfile(res.data))
+        })
+}
 export default profileReducer;

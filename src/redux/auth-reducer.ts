@@ -1,5 +1,7 @@
-const SET_USER_DATA = 'SET_USER_DATA';
+import {Dispatch} from "redux";
+import {authAPI} from "../api/api";
 
+const SET_USER_DATA = 'SET_USER_DATA';
 
 export type DataPropsType = {
     id: number
@@ -17,7 +19,6 @@ export type initialStateType = {
     login: string |null
     isAuth: boolean
 }
-
 
 
 const initialState: initialStateType = {
@@ -41,11 +42,20 @@ const authReducer = (state: initialStateType = initialState, action:AuthReducerA
 }
 
 
-//Action creators
+//* ====== Action Creators =====================================================================================>
 export type AuthReducerActionType = ReturnType<typeof setAuthUserData>
 
 export const setAuthUserData = (userId: number, login: string, email: string) => ({type: SET_USER_DATA, payload: {userId, login, email}} as const);
 
-
+//* ====== Thunk Creators ======================================================================================>
+export const  getAuthUserData = () => (dispatch: Dispatch) => {
+    authAPI.getAuthData()
+        .then(res => {
+            const {id, login, email} = res.data.data;
+            if (res.resultCode === 0) {
+                dispatch(setAuthUserData(id, login, email))
+            }
+        })
+}
 
 export default authReducer;

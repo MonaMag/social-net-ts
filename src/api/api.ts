@@ -38,7 +38,7 @@ export const usersAPI = {
 //* Profile Page API ==================================================================================>
 
 export const profileAPI = {
-    getUserProfile(userId: number) {
+    getProfile(userId: number) {
         return instance.get(`profile/${userId}`).then(res => res.data);
     },
 

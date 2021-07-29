@@ -1,27 +1,24 @@
 import React from 'react';
 import Profile from "./Profile";
-import axios from "axios";
 import {connect} from "react-redux";
-import {setUserProfile, UserProfileType} from "../../redux/profile-reducer";
+import {getUserProfile, UserProfileType} from "../../redux/profile-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {RouteComponentProps, withRouter} from 'react-router-dom';
+
+
 
 type PathParamsType = {
     userId: string
 }
 
-type MapStatePropsType = {
+type MapStateType = {
     profile: UserProfileType | null
 }
-type MapDispatchPropsType = {
-    setUserProfile: (profile: UserProfileType) => void
+type MapDispatchType = {
+    getUserProfile: (userId: number) => Function
 }
-/*type ProfileContainerPropsType = {
-    profile: UserProfileType | null
-    setUserProfile: (profile: UserProfileType) => void
-    userId: number
-}*/
-type ProfileContainerPropsType = MapStatePropsType & MapDispatchPropsType & RouteComponentProps<PathParamsType>
+
+type ProfileContainerPropsType = MapStateType & MapDispatchType & RouteComponentProps<PathParamsType>
 
 class ProfileContainer extends React.Component <ProfileContainerPropsType, AppStateType> {
 
@@ -30,11 +27,8 @@ class ProfileContainer extends React.Component <ProfileContainerPropsType, AppSt
         if(!userId) {
             userId = '17907';
         }
-        axios.get<UserProfileType>('https://social-network.samuraijs.com/api/1.0/profile/'+userId)
-            .then(response => {
-                console.log(response.data)
-                this.props.setUserProfile(response.data)
-            });
+
+        this.props.getUserProfile(Number(userId))
     }
 
     render() {
@@ -46,7 +40,7 @@ class ProfileContainer extends React.Component <ProfileContainerPropsType, AppSt
     }
 }
 
-const mapStateToProps = (state: AppStateType): MapStatePropsType => {
+const mapStateToProps = (state: AppStateType): MapStateType => {
     return {
         profile: state.profilePage.profile
     }
@@ -54,4 +48,4 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 
 const ProfileContainerWithRouter = withRouter(ProfileContainer);
 
-export default connect(mapStateToProps, {setUserProfile})(ProfileContainerWithRouter);
+export default connect <MapStateType, MapDispatchType, {}, AppStateType>(mapStateToProps, {getUserProfile})(ProfileContainerWithRouter);
