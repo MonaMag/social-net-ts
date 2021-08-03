@@ -5,8 +5,6 @@ import preloader from "../../../assets/images/preloader.gif";
 type PreloaderPropsType= {
 
 }
-
-
 const Preloader = (props: any) => {
     return <div>
         <img src={preloader} className={s.loader}/>

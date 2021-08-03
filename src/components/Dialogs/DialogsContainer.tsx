@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 
 type MapStatePropsType = {
     dialogsPage: initialStateType
+    isAuth: boolean
 }
 
 type MapDispatchPropsType = {
@@ -16,7 +17,8 @@ type MapDispatchPropsType = {
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
-        dialogsPage: state.dialogsPage
+        dialogsPage: state.dialogsPage,
+        isAuth: state.auth.isAuth
     }
 }
 
