@@ -75,7 +75,7 @@ type MapDispatchType = {
 
 
 export default compose<React.ComponentType>(
-    withAuthRedirect,
+    //withAuthRedirect,
     connect (mapStateToProps, {
         follow, unfollow, setCurrentPage, toggleIsFollowingProgress, getUsers
     })
