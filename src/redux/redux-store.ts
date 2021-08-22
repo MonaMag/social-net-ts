@@ -4,6 +4,7 @@ import dialogsReducer from "./dialogs-reducer";
 import usersReducer from "./users-reducer";
 import authReducer from "./auth-reducer";
 import ThunkMiddleware from 'redux-thunk';
+import { reducer as formReducer } from 'redux-form'
 
 
 const rootReducer = combineReducers({
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
     auth: authReducer,
+    form: formReducer
 });
 
 //creating state and store type
