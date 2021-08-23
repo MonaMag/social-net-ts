@@ -107,20 +107,20 @@ export const setUserStatus = (status: string) => ({type: SET_USER_STATUS, status
 
 export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
     profileAPI.getProfile(userId)
-        .then(res => {
-            dispatch(setUserProfile(res.data))
+        .then(data => {
+            dispatch(setUserProfile(data))
         })
 }
 export const getUserStatus = (userId: number) => (dispatch: Dispatch) => {
     profileAPI.getStatus(userId)
-        .then(res => {
-            dispatch(setUserStatus(res.data))
+        .then(data => {
+            dispatch(setUserStatus(data))
         })
 }
 export const updateUserStatus = (status: string) => (dispatch: Dispatch) => {
     profileAPI.updateStatus(status)
-        .then(res => {
-            if(res.data.resultCode === 0) {
+        .then(data => {
+            if(data.resultCode === 0) {
                 dispatch(setUserStatus(status))
             }
         })

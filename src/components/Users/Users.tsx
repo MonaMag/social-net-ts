@@ -1,9 +1,10 @@
 import React from 'react';
 import s from "./Users.module.css";
 import usersDefaultAva from "../../assets/images/user.png";
-import {unfollowSuccess, UserType} from "../../redux/users-reducer";
+import { UserType} from "../../redux/users-reducer";
 import {NavLink} from 'react-router-dom';
-import {UserProfileType} from "../../redux/profile-reducer";
+import {Paginator} from "../Paginator/Paginator";
+
 
 
 export type UsersPropsType = {
@@ -19,21 +20,24 @@ export type UsersPropsType = {
 
 const Users = (props: UsersPropsType) => {
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
-    let pages = [];
+    let pages: number[] = [];
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
     }
 
     return (
         <div>
-            <div>{pages.map(p => {
-                return <span
-                    className={props.currentPage === p ? s.page + ' ' + s.selectedPage : s.page}
+            <div>{pages.map((p, index) => {
+                return <span key={index} onClick={() => props.onPageChanged(p)}
+                              className={props.currentPage === p ? s.page + ' ' + s.selectedPage : s.page}
                     //className={props.currentPage === p && s.selectedPage}>{p}</span>
-                    onClick={() => props.onPageChanged(p)}>{p}</span>
-            })}
+                >{p}</span>
+            })
+                }
             </div>
-
+           {/* <Paginator  totalUsersCount={props.totalUsersCount} pageSize={props.pageSize}
+                        currentPage={props.currentPage} onPageChanged={props.onPageChanged}/>
+*/}
             {props.users.map(u =>
                 <div key={u.id} className={s.wrapper}>
                     <div>

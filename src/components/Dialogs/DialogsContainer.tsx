@@ -9,6 +9,7 @@ import { compose } from 'redux';
 
 type MapStatePropsType = {
     dialogsPage: initialStateType
+    isAuth: boolean
 }
 
 type MapDispatchPropsType = {
@@ -19,6 +20,7 @@ type MapDispatchPropsType = {
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         dialogsPage: state.dialogsPage,
+        isAuth: state.auth.isAuth
     }
 }
 
@@ -34,9 +36,10 @@ let mapDispatchToProps = (dispatch: any) => {
 }
 
 //функция compose (из функцион-го пограм-я, из Redux) -Объединяет функции справа налево. Мы можем использовать ее, чтобы применить несколько расширителей стора последовательно.Т.е. делает композицию обработчиков чего-либо, возвращает конечную функцию, полученную путем композиции переданных функций справа налово
-export default compose<React.ComponentType>(
-    connect(mapStateToProps, mapDispatchToProps),
-    withAuthRedirect
-)(Dialogs)
 
+
+export default compose<React.ComponentType>(
+    //withAuthRedirect,
+    connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps),
+)(Dialogs)
 

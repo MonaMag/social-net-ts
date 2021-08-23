@@ -20,9 +20,8 @@ const instance = axios.create({
 //* Users Page API ===================================================================================>
 export const usersAPI = {
     getUsers(currentPage = 1, pageSize = 10) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`).then(res => {
-            return res.data;
-        })
+        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
+            .then(res => res.data)
     },
 
     follow(userId: number) {
@@ -44,13 +43,13 @@ export const usersAPI = {
 
 export const profileAPI = {
     getProfile(userId: number) {
-        return instance.get(`profile/${userId}`)
+        return instance.get(`profile/${userId}`).then(res => res.data);
     },
     getStatus(userId: number) {
-        return instance.get(`profile/status/${userId}`)
+        return instance.get(`profile/status/${userId}`).then(res => res.data);
     },
     updateStatus(status: string) {
-        return instance.put(`profile/status`, {status: status})
+        return instance.put(`profile/status`, {status: status}).then(res => res.data);
     }
 
 }

@@ -25,7 +25,7 @@ const initialState: initialStateType = {
     userId: null as number | null,
     login: null as string | null,
     email: null as string | null,
-    isAuth: false
+    isAuth: true
 };
 
 const authReducer = (state: initialStateType = initialState, action:AuthReducerActionType) => {
@@ -50,9 +50,9 @@ export const setAuthUserData = (userId: number, login: string, email: string) =>
 //* ====== Thunk Creators ======================================================================================>
 export const  getAuthUserData = () => (dispatch: Dispatch) => {
     authAPI.getAuthData()
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                const {id, login, email} = res.data.data;
+        .then(data => {
+            if (data.resultCode === 0) {
+                const {id, login, email} = data.data;
                 dispatch(setAuthUserData(id, login, email))
             }
         })
