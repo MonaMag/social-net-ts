@@ -15,7 +15,7 @@ function Profile(props: ProfilePropsType) {
             <ProfileInfo profile={props.profile}
                          status={props.status}
                          updateUserStatus={props.updateUserStatus}/>
-            <MyPostsContainer/>
+            <MyPostsContainer />
         </div>
     );
 }

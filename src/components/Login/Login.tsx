@@ -9,6 +9,7 @@ type FormDataType = {
 
 
 export const Login = () => {
+
     const handleSubmit = (formData: FormDataType) => {
         console.log(formData);
     }
@@ -18,7 +19,7 @@ export const Login = () => {
     </div>
 }
 
-//* Login form component ----------------------------------------
+//* LoginForm component ----------------------------------------
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (

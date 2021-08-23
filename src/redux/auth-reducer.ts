@@ -42,12 +42,12 @@ const authReducer = (state: initialStateType = initialState, action:AuthReducerA
 }
 
 
-//* ====== Action Creators =====================================================================================>
+//* Action Creators --------------------------------------------------------------------------->
 export type AuthReducerActionType = ReturnType<typeof setAuthUserData>
 
 export const setAuthUserData = (userId: number, login: string, email: string) => ({type: SET_USER_DATA, payload: {userId, login, email}} as const);
 
-//* ====== Thunk Creators ======================================================================================>
+//* Thunk Creators ---------------------------------------------------------------------------->
 export const  getAuthUserData = () => (dispatch: Dispatch) => {
     authAPI.getAuthData()
         .then(data => {

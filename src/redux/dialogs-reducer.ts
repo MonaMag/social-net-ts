@@ -1,4 +1,4 @@
-const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
+//const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 const SEND_MESSAGE = 'SEND-MESSAGE';
 
 export type DialogItemPropsType = {
@@ -13,12 +13,12 @@ export type MessagePropsType = {
 export type DialogsPageType = {
     dialogs: Array<DialogItemPropsType>
     messages: Array<MessagePropsType>
-    newMessageBody: string
+    //newMessageBody: string
 }
 export type initialStateType = {
     dialogs: Array<DialogItemPropsType>
     messages: Array<MessagePropsType>
-    newMessageBody: string
+    //newMessageBody: string
 }
 const initialState: initialStateType = {
     dialogs: [
@@ -35,22 +35,21 @@ const initialState: initialStateType = {
         {id: 3, message: 'Hi, my dear!'},
         {id: 4, message: 'Where are you?'}
     ],
-    newMessageBody: ''
+   // newMessageBody: ''
 }
 //export type DialogsPageStateType = typeof initialState
 
 
 const dialogsReducer = (state: initialStateType = initialState, action: DialogsReducerActionType): initialStateType => {
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE_BODY:
+        /*case UPDATE_NEW_MESSAGE_BODY:
             return {
                 ...state, newMessageBody: action.body
-            };
+            };*/
         case SEND_MESSAGE:
-            const body = state.newMessageBody;
+            const body = action.newMessageBody;
             return {
                 ...state,
-                newMessageBody: '',
                 messages: [...state.messages, {id: 6, message: body}]
             };
         default:
@@ -58,12 +57,12 @@ const dialogsReducer = (state: initialStateType = initialState, action: DialogsR
     }
 }
 
-//Action creators
+//* Action creators --------------------------------------------------------------->
 
-export type DialogsReducerActionType = ReturnType<typeof updateMessageBodyAC> | ReturnType<typeof sendMessageAC>
+export type DialogsReducerActionType = ReturnType<typeof sendMessageAC> /* | ReturnType<typeof updateMessageBodyAC>*/
 
-export const updateMessageBodyAC = (body: string) => ({type: UPDATE_NEW_MESSAGE_BODY, body: body} as const)
-export const sendMessageAC = () => ({type: SEND_MESSAGE,} as const)
+//export const updateMessageBodyAC = (body: string) => ({type: UPDATE_NEW_MESSAGE_BODY, body: body} as const)
+export const sendMessageAC = (newMessageBody: string) => ({type: SEND_MESSAGE, newMessageBody} as const)
 
 
 export default dialogsReducer;
