@@ -14,7 +14,6 @@ type MapStatePropsType = {
 
 type MapDispatchPropsType = {
     sendMessage: (newMessageBody: string) => void
-    //newMessageChange: (text:string) => void
 }
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
@@ -29,9 +28,6 @@ let mapDispatchToProps = (dispatch: any) => {
         sendMessage: (newMessageBody: string) => {
             dispatch(sendMessageAC(newMessageBody));
         },
-        /*newMessageChange: (text:string) => {
-            dispatch(updateMessageBodyAC(text))
-        }*/
     }
 }
 

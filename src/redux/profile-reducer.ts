@@ -2,7 +2,6 @@ import {Dispatch} from "redux";
 import { profileAPI } from "../api/api";
 
 const ADD_POST = 'ADD-POST';
-//const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET-USER-PROFILE';
 const SET_USER_STATUS = 'SET_USER_STATUS'
 
@@ -57,15 +56,12 @@ const initialState: initialStateType = {
 const profileReducer = (state: initialStateType = initialState, action: ProfileReducerActionType): initialStateType  => {
     switch (action.type) {
         case ADD_POST: {
-            const newPost: PostPropsType = {
-                id: state.posts.length + 1,
-                message: action.newPostText,
-                likesCount: 0
-            };
             return {
                 ...state,
-                posts: [{id: state.posts.length + 1, message: action.newPostText.trim(), likesCount: 0},
-                    ...state.posts],
+                posts: [...state.posts,
+                    {id: state.posts.length + 1,
+                        message: action.newPostText,
+                        likesCount: 0}],
             };
         }
         case SET_USER_PROFILE: {

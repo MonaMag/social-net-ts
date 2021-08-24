@@ -7,7 +7,6 @@ import MyPosts from "./MyPosts";
 
 type MapStatePropsType = {
     posts: Array<PostPropsType>
-    //newPostText: string
 }
 type MapDispatchPropsType = {
     addPost: (newPostText: string) => void
@@ -17,7 +16,6 @@ type MapDispatchPropsType = {
  const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         posts: state.profilePage.posts,
-        //newPostText: state.profilePage.newPostText
     }
 }
 

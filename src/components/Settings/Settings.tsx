@@ -1,12 +1,21 @@
 import React from 'react';
-import s from './Settings.module.css';
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {Redirect} from "react-router-dom";
 
-function Settings(props: any) {
+type SettingsPropsType = {
+    value: boolean
+}
+function Settings(props: SettingsPropsType) {
+    if (!props.value) {
+        return  <Redirect to={'/login'}/>;
+    }
   return (
       <div>
+          {props.value}
         Settings
       </div>
   );
 }
 
-export default Settings;
+
+export default withAuthRedirect(Settings);
