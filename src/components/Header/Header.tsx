@@ -8,6 +8,8 @@ type HeaderPropsType = {
     isAuth: boolean
     login: string | null
     email: string | null
+    getAuthUserData: () => void
+    logoutTC: () => void
 }
 
 function Header(props: HeaderPropsType) {
@@ -15,8 +17,8 @@ function Header(props: HeaderPropsType) {
         <header className={s.header}>
             <img src={logo}/>
             <div className={s.login}>
-                {props.isAuth ?
-                    <div>{props.login} | {props.email}</div>
+                {props.isAuth
+                    ? <div>{props.login} - <button onClick={props.logoutTC}>logout</button></div>
                     : <NavLink to={'/login'}>Login</NavLink>
                 }
             </div>

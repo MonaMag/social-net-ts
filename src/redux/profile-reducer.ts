@@ -1,5 +1,6 @@
-import {Dispatch} from "redux";
-import { profileAPI } from "../api/api";
+import {profileAPI} from "../api/profile-api";
+import {AppThunkType} from "./redux-store";
+
 
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET-USER-PROFILE';
@@ -92,19 +93,19 @@ export const setUserStatus = (status: string) => ({type: SET_USER_STATUS, status
 
 //* ====== Thunk Creators ======================================================================================>
 
-export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
+export const getUserProfile = (userId: number):  AppThunkType => (dispatch) => {
     profileAPI.getProfile(userId)
         .then(data => {
             dispatch(setUserProfile(data))
         })
 }
-export const getUserStatus = (userId: number) => (dispatch: Dispatch) => {
+export const getUserStatus = (userId: number):  AppThunkType => (dispatch) => {
     profileAPI.getStatus(userId)
         .then(data => {
             dispatch(setUserStatus(data))
         })
 }
-export const updateUserStatus = (status: string) => (dispatch: Dispatch) => {
+export const updateUserStatus = (status: string):  AppThunkType => (dispatch) => {
     profileAPI.updateStatus(status)
         .then(data => {
             if(data.resultCode === 0) {

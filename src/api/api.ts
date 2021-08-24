@@ -2,13 +2,8 @@ import axios from "axios";
 import {UserType} from "../redux/users-reducer";
 
 
-type GetUsersRequestType = {
-    items: UserType[]
-    error: string
-    totalCount: number
-}
 
-const instance = axios.create({
+export const instance = axios.create({
     withCredentials: true,
     baseURL: `https://social-network.samuraijs.com/api/1.0/`,
     headers: {
@@ -16,51 +11,23 @@ const instance = axios.create({
     }
 });
 
-
-//* Users Page API ===================================================================================>
-export const usersAPI = {
-    getUsers(currentPage = 1, pageSize = 10) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
-            .then(res => res.data)
-    },
-
-    follow(userId: number) {
-        return instance.delete(`follow/${userId}`).then(res => res.data);
-    },
-
-    unfollow(userId: number) {
-        return instance.post(`follow/${userId}`).then(res => res.data);
-    },
-    //если у нас есть запросы на наш метод getProfile в другом API (допустим раньше писали его в userAPI), можем ссылаться на новый API
-    /*getProfile(userId: number) {
-        console.warn('Obsolete method. Please use profileAPI object.')
-        return profileAPI.getProfile(userId);
-    }*/
+export enum ResultCodesEnum {
+    Success = 0,
+    Error = 1
 }
 
-
-//* Profile Page API ==================================================================================>
-
-export const profileAPI = {
-    getProfile(userId: number) {
-        return instance.get(`profile/${userId}`).then(res => res.data);
-    },
-    getStatus(userId: number) {
-        return instance.get(`profile/status/${userId}`).then(res => res.data);
-    },
-    updateStatus(status: string) {
-        return instance.put(`profile/status`, {status: status}).then(res => res.data);
-    }
-
+export enum ResultCodeForCapcthaEnum {
+    CaptchaIsRequired = 10
 }
 
-
-//* Auth Page API ==================================================================================>
-
-export const authAPI = {
-    getAuthData() {
-        return instance.get(`auth/me`).then(res => res.data);
-    },
+export type GetUsersRequestType = {
+    items: UserType[]
+    error: string
+    totalCount: number
 }
-
+export type APIResponseType<D = {}, RC = ResultCodesEnum> = {
+    data: D
+    messages: Array<string>
+    resultCode: RC
+}
 

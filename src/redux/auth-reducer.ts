@@ -1,5 +1,6 @@
-import {Dispatch} from "redux";
-import {authAPI} from "../api/api";
+import {authAPI} from "../api/auth-api";
+import {AppThunkType} from "./redux-store";
+
 
 const SET_USER_DATA = 'SET_USER_DATA';
 
@@ -8,33 +9,28 @@ export type DataPropsType = {
     email: string
     login: string
 }
-/*export type AuthProfileType = {
-    data: DataPropsType
-    resultCode: number
-    messages: string[]
-}*/
-export type initialStateType = {
+
+export type AuthStateType = {
     userId: number | null
     email: string | null
     login: string |null
     isAuth: boolean
 }
 
-
-const initialState: initialStateType = {
+//* Initial State -------------------------------------------------------------------------->
+const initialState: AuthStateType = {
     userId: null as number | null,
     login: null as string | null,
     email: null as string | null,
-    isAuth: true
+    isAuth: false
 };
 
-const authReducer = (state: initialStateType = initialState, action:AuthReducerActionType) => {
+const authReducer = (state: AuthStateType = initialState, action:AuthReducerActionType):AuthStateType => {
     switch (action.type) {
         case SET_USER_DATA:
             return {
                 ...state,
                ...action.payload,
-                isAuth: true
             }
         default:
             return state;
@@ -42,20 +38,44 @@ const authReducer = (state: initialStateType = initialState, action:AuthReducerA
 }
 
 
-//* Action Creators --------------------------------------------------------------------------->
+//* Action Creators -------------------------------------------------------------------------->
 export type AuthReducerActionType = ReturnType<typeof setAuthUserData>
 
-export const setAuthUserData = (userId: number, login: string, email: string) => ({type: SET_USER_DATA, payload: {userId, login, email}} as const);
+export const setAuthUserData = (userId: number | null, login: string | null, email: string | null, isAuth: boolean) => ({type: SET_USER_DATA, payload: {userId, login, email, isAuth}} as const);
+
+
+
 
 //* Thunk Creators ---------------------------------------------------------------------------->
-export const  getAuthUserData = () => (dispatch: Dispatch) => {
+
+export const  getAuthUserData = ():  AppThunkType => (dispatch) => {
     authAPI.getAuthData()
         .then(data => {
             if (data.resultCode === 0) {
                 const {id, login, email} = data.data;
-                dispatch(setAuthUserData(id, login, email))
+                dispatch(setAuthUserData(id, login, email, true))
             }
         })
+}
+
+export const  loginTC = (email: string, password: string, rememberMe: boolean):  AppThunkType => (dispatch) => {
+    authAPI.login(email, password, rememberMe)
+        .then(data => {
+            if (data.resultCode === 0) {
+                dispatch(getAuthUserData())
+            }/* else {
+                let message = data.messages.length > 0 ? data.messages[0] : "Some error";
+                dispatch(stopSubmit("login", {_error: message}));*/
+        })
+}
+
+export const logoutTC = ():  AppThunkType => (dispatch) => {
+    authAPI.logout()
+        .then(data => {
+            if (data.resultCode === 0) {
+                dispatch(setAuthUserData(null, null, null, false));
+            }
+        });
 }
 
 export default authReducer;
