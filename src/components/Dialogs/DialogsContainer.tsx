@@ -1,5 +1,5 @@
 import React  from 'react';
-import {initialStateType, sendMessageAC} from "../../redux/dialogs-reducer";
+import {dialogsStateType, sendMessageAC} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {AppStateType} from "../../redux/redux-store";
 import {connect} from "react-redux";
@@ -8,7 +8,7 @@ import { compose } from 'redux';
 
 
 type MapStatePropsType = {
-    dialogsPage: initialStateType
+    dialogsPage: dialogsStateType
     isAuth: boolean
 }
 

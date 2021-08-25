@@ -14,12 +14,12 @@ export type DialogsPageType = {
     messages: Array<MessagePropsType>
 
 }
-export type initialStateType = {
+export type dialogsStateType = {
     dialogs: Array<DialogItemPropsType>
     messages: Array<MessagePropsType>
 
 }
-const initialState: initialStateType = {
+const initialState:  dialogsStateType = {
     dialogs: [
         {id: 1, name: 'Hanna'},
         {id: 2, name: 'Kira'},
@@ -38,7 +38,7 @@ const initialState: initialStateType = {
 //export type DialogsPageStateType = typeof initialState
 
 
-const dialogsReducer = (state: initialStateType = initialState, action: DialogsReducerActionType): initialStateType => {
+const dialogsReducer = (state:  dialogsStateType = initialState, action: DialogsReducerActionType):  dialogsStateType => {
     switch (action.type) {
         case SEND_MESSAGE:
             const body = action.newMessageBody;

@@ -8,7 +8,7 @@ type HeaderPropsType = {
     isAuth: boolean
     login: string | null
     email: string | null
-    getAuthUserData: () => void
+    //getAuthUserData: () => void
     logoutTC: () => void
 }
 
