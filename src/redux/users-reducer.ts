@@ -35,7 +35,7 @@ const initialState: UsersStateType = {
     users: [],
     pageSize: 5,
     totalUsersCount: 0,
-    currentPage: 2,
+    currentPage: 1,
     isFetching: false,
     followingInProgress: []
 };
@@ -123,7 +123,7 @@ export const getUsers = (currentPage: number, pageSize: number):  AppThunkType =
             dispatch(toggleIsFetching(false));
             dispatch(setUsers(data.items));
             dispatch(setCurrentPage(currentPage));
-            dispatch(setTotalUsersCount(200));
+            dispatch(setTotalUsersCount(220));
         });
     }
 }

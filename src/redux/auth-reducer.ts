@@ -1,5 +1,6 @@
 import {authAPI} from "../api/auth-api";
 import {AppThunkType} from "./redux-store";
+import {stopSubmit} from "redux-form";
 
 
 const SET_USER_DATA = 'SET_USER_DATA';
@@ -63,9 +64,10 @@ export const  loginTC = (email: string, password: string, rememberMe: boolean): 
         .then(data => {
             if (data.resultCode === 0) {
                 dispatch(getAuthUserData())
-            }/* else {
+            } else {
                 let message = data.messages.length > 0 ? data.messages[0] : "Some error";
-                dispatch(stopSubmit("login", {_error: message}));*/
+                dispatch(stopSubmit('loginForm', {_error: message}))
+            }
         })
 }
 

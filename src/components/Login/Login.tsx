@@ -4,6 +4,7 @@ import {Input} from "../common/FormsControls/FormsControls";
 import {required} from "../../utils/validators/validators";
 import {Redirect} from "react-router-dom";
 import {LoginPropsType} from "./LoginContainer";
+import s from './../common/FormsControls/FormsControls.module.css'
 
 
 type LoginFormDataType = {
@@ -19,18 +20,18 @@ const LoginForm =   reduxForm<LoginFormDataType>({form: 'loginForm'})
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field name={'email'} placeholder={"Email"}
-                       component={Input} validate={[required]}/>
+                <Field name={'email'} placeholder={"Email"} component={Input} validate={[required]}/>
             </div>
             <div>
-                <Field name={'password'} placeholder={"Password"}
-                       component={Input} validate={[required]} type={'password'}/>
+                <Field name={'password'} placeholder={"Password"} component={Input} validate={[required]} type={'password'}/>
             </div>
             <div>
-                <Field name={'rememberMe'} type={"checkbox"}
-                       component={Input} validate={[required]}
-                /> Remember me
+                <Field name={'rememberMe'} type={"checkbox"} component={Input} validate={[required]}/> Remember me
             </div>
+
+            {props.error && <div className={s.formSummaryError }>
+                {props.error}
+            </div>}
             <div>
                 <button>Sign in</button>
             </div>
@@ -38,6 +39,7 @@ const LoginForm =   reduxForm<LoginFormDataType>({form: 'loginForm'})
     )
 })
 
+//* Login component ----------------------------------------
 
 const Login = (props: LoginPropsType) => {
 
