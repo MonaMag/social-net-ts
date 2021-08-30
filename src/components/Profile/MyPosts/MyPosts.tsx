@@ -14,7 +14,8 @@ type MyPostsPropsType = {
 
 
 //* MyPost component ---------------------------------------------------------->
-function MyPosts(props: MyPostsPropsType) {
+const MyPosts = React.memo((props: MyPostsPropsType) => {
+    console.log('RENDER YU');
     const postsElements = props.posts
         .map(p => <Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount}/>)
 
@@ -31,6 +32,6 @@ function MyPosts(props: MyPostsPropsType) {
             </div>
         </div>
     );
-}
+})
 
 export default MyPosts;
