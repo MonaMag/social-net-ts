@@ -5,6 +5,7 @@ import {AppThunkType} from "./redux-store";
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET-USER-PROFILE';
 const SET_USER_STATUS = 'SET_USER_STATUS'
+const DELETE_POST = 'DELETE_POST'
 
 export type PostPropsType = {
     id: number
@@ -36,13 +37,13 @@ export type UserProfileType = {
     photos: PhotosType
 }
 
-type initialStateType = {
+export type ProfileStateType = {
     posts: Array<PostPropsType>
     profile: null | UserProfileType
     status: string
 }
 
-const initialState: initialStateType = {
+const initialState: ProfileStateType = {
     posts: [
         {id: 1, message: 'Hi', likesCount: 12},
         {id: 2, message: 'How are you?!', likesCount: 20},
@@ -54,7 +55,7 @@ const initialState: initialStateType = {
 };
 
 
-const profileReducer = (state: initialStateType = initialState, action: ProfileReducerActionType): initialStateType  => {
+const profileReducer = (state: ProfileStateType = initialState, action: ProfileReducerActionType): ProfileStateType  => {
     switch (action.type) {
         case ADD_POST: {
             return {
@@ -77,18 +78,21 @@ const profileReducer = (state: initialStateType = initialState, action: ProfileR
                 status: action.status
             };
         }
+        case DELETE_POST:
+            return {...state, posts: state.posts.filter(post => post.id !== action.postId)}
         default:
             return state;
     }
 }
 
 
-export type ProfileReducerActionType = ReturnType<typeof addPostAC> | ReturnType<typeof setUserProfile> |  ReturnType<typeof setUserStatus>
+export type ProfileReducerActionType = ReturnType<typeof addPostAC> | ReturnType<typeof setUserProfile> |  ReturnType<typeof setUserStatus> | ReturnType<typeof deletePost>
 
 //* ====== Action Creators =====================================================================================>
 export const addPostAC = (newPostText: string) => ({type: ADD_POST, newPostText} as const)
 export const setUserProfile = (profile: UserProfileType) => ({type: SET_USER_PROFILE, profile} as const)
 export const setUserStatus = (status: string) => ({type: SET_USER_STATUS, status} as const)
+export const deletePost = (postId: number) => ({type: 'DELETE_POST', postId} as const)
 
 
 //* ====== Thunk Creators ======================================================================================>

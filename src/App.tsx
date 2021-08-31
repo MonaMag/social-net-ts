@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
-import {Redirect, Route, withRouter} from 'react-router-dom';
+import {BrowserRouter, Redirect, Route, withRouter} from 'react-router-dom';
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
@@ -29,6 +29,7 @@ class App extends React.Component<AppPropsType > {
         }
 
         return (
+            <BrowserRouter>
             <div className='app-wrapper'>
                 <HeaderContainer/>
                 <Navbar/>
@@ -43,6 +44,7 @@ class App extends React.Component<AppPropsType > {
                     <Route path='/login' render={() => <LoginContainer/>}/>
                 </div>
             </div>
+            </BrowserRouter>
         )
     }
 }
