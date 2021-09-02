@@ -1,4 +1,4 @@
-const SEND_MESSAGE = 'SEND-MESSAGE';
+const SEND_MESSAGE = 'mona/soc-net/dialog-reducer/SEND-MESSAGE';
 
 export type DialogItemPropsType = {
     id: number

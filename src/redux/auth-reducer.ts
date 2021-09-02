@@ -3,7 +3,7 @@ import {AppThunkType} from "./redux-store";
 import {stopSubmit} from "redux-form";
 
 
-const SET_USER_DATA = 'SET_USER_DATA';
+const SET_USER_DATA = 'mona/soc-net/auth-reducer/SET_USER_DATA';
 
 export type DataPropsType = {
     id: number
@@ -49,35 +49,29 @@ export const setAuthUserData = (userId: number | null, login: string | null, ema
 
 //* Thunk Creators ---------------------------------------------------------------------------->
 
-export const  getAuthUserData = ():  AppThunkType => (dispatch) => {
-    return authAPI.getAuthData()
-        .then(data => {
+export const  getAuthUserData = ():  AppThunkType => async dispatch => {
+    const data = await authAPI.getAuthData();
             if (data.resultCode === 0) {
                 const {id, login, email} = data.data;
                 dispatch(setAuthUserData(id, login, email, true))
             }
-        })
 }
 
-export const  loginTC = (email: string, password: string, rememberMe: boolean):  AppThunkType => (dispatch) => {
-    authAPI.login(email, password, rememberMe)
-        .then(data => {
+export const  loginTC = (email: string, password: string, rememberMe: boolean):  AppThunkType => async dispatch => {
+    const data = await authAPI.login(email, password, rememberMe)
             if (data.resultCode === 0) {
                 dispatch(getAuthUserData())
             } else {
                 let message = data.messages.length > 0 ? data.messages[0] : "Some error";
                 dispatch(stopSubmit('loginForm', {_error: message}))
             }
-        })
 }
 
-export const logoutTC = ():  AppThunkType => (dispatch) => {
-    authAPI.logout()
-        .then(data => {
+export const logoutTC = ():  AppThunkType => async dispatch => {
+    const data = await authAPI.logout()
             if (data.resultCode === 0) {
                 dispatch(setAuthUserData(null, null, null, false));
             }
-        });
 }
 
 export default authReducer;

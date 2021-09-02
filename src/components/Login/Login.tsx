@@ -1,6 +1,6 @@
 import React from 'react';
 import {Field, reduxForm} from "redux-form";
-import {Input} from "../common/FormsControls/FormsControls";
+import {createField, Input} from "../common/FormsControls/FormsControls";
 import {required} from "../../utils/validators/validators";
 import {Redirect} from "react-router-dom";
 import {LoginPropsType} from "./LoginContainer";
@@ -12,25 +12,19 @@ type LoginFormDataType = {
     password: string
     rememberMe: boolean
 }
-
+type LoginFormKeysType = keyof LoginFormDataType
 //* LoginForm component ----------------------------------------
 
-const LoginForm =   reduxForm<LoginFormDataType>({form: 'loginForm'})
-((props) => {
+const LoginForm = reduxForm<LoginFormDataType>({form: 'loginForm'})
+(({handleSubmit, error}) => {
     return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field name={'email'} placeholder={"Email"} component={Input} validate={[required]}/>
-            </div>
-            <div>
-                <Field name={'password'} placeholder={"Password"} component={Input} validate={[required]} type={'password'}/>
-            </div>
-            <div>
-                <Field name={'rememberMe'} type={"checkbox"} component={Input} validate={[required]}/> Remember me
-            </div>
+        <form onSubmit={handleSubmit}>
+            {createField<LoginFormKeysType>('Email', 'email', [required], Input)}
+            {createField<LoginFormKeysType>('Password', 'password', [required], Input, {type: 'password'})}
+            {createField<LoginFormKeysType>(undefined, 'rememberMe', [], Input, {type: 'checkbox'}, 'remember me')}
 
-            {props.error && <div className={s.formSummaryError }>
-                {props.error}
+            {error && <div className={s.formSummaryError}>
+                {error}
             </div>}
             <div>
                 <button>Sign in</button>
@@ -39,15 +33,15 @@ const LoginForm =   reduxForm<LoginFormDataType>({form: 'loginForm'})
     )
 })
 
-//* Login component ----------------------------------------
+//* Login component ---------------------------------------------
 
 const Login = (props: LoginPropsType) => {
 
     const onSubmit = (formData: LoginFormDataType) => {
         props.loginTC(formData.email, formData.password, formData.rememberMe);
     }
-    if(props.isAuth) {
-        return <Redirect to={'/profile'} />
+    if (props.isAuth) {
+        return <Redirect to={'/profile'}/>
     }
     return <div>
         <h1>Login</h1>

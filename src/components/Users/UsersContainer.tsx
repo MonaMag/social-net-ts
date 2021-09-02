@@ -2,9 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {
     follow, getUsers,
-    setCurrentPage,
-   toggleIsFollowingProgress,
-    unfollow,
+    unfollow, usersActions,
     UserType
 } from '../../redux/users-reducer';
 import {AppStateType} from '../../redux/redux-store';
@@ -82,6 +80,6 @@ type MapDispatchType = {
 
 export default compose<React.ComponentType>(
     connect (mapStateToProps, {
-        follow, unfollow, setCurrentPage, toggleIsFollowingProgress, getUsers
+        follow, unfollow, usersActions, getUsers
     })
 )(UsersContainer);
