@@ -9,11 +9,14 @@ export const usersAPI = {
     },
 
     follow(userId: number) {
-        return instance.delete(`follow/${userId}`).then(res => res.data);
+        return instance.post(`follow/${userId}`)
+            .then(res => {
+                return res.data
+            });
     },
 
     unfollow(userId: number) {
-        return instance.post<APIResponseType>(`follow/${userId}`).then(res => res.data);
+        return instance.delete<APIResponseType>(`follow/${userId}`).then(res => res.data);
     },
 
 

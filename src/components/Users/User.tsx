@@ -14,7 +14,7 @@ export type UserPropsType = {
 
 
 const User = ({user, followingInProgress, follow, unfollow}: UserPropsType) => {
-
+    console.log(user.followed)
     return (
         <div className={s.wrapper}>
             <div>

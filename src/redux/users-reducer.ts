@@ -4,15 +4,17 @@ import {APIResponseType} from "../api/api";
 import {Dispatch} from "react";
 import {updateObjectInArray} from "../utils/object-helpers";
 
-/*const FOLLOW = 'FOLLOW';
+/*
+const FOLLOW = 'mona/soc-net/user-reducer/FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'mona/soc-net/user-reducer/SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'mona/soc-net/user-reducer/SET_TOTAL_USERS_COUNT';
 const TOGGLE_IS_FETCHING = 'mona/soc-net/user-reducer/TOGGLE_IS_FETCHING'
-const TOGGLE_IS_FOLLOWING_PROGRESS = 'mona/soc-net/user-reducer/TOGGLE_IS_FOLLOWING_PROGRESS'*/
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'mona/soc-net/user-reducer/TOGGLE_IS_FOLLOWING_PROGRESS'
+*/
 
-//* ================== Users reducer types ===============================================================>
+//* Users reducer types ----------------------------------------------->
 export type UserType = {
     id: number
     name: string
@@ -21,8 +23,7 @@ export type UserType = {
     followed: boolean
 }
 
-//* ================== Initial State ====================================================================>
-
+//* Initial State ------------------------------------------------------->
 export type UsersStateType = {
     users: Array<UserType>
     pageSize: number
@@ -44,14 +45,14 @@ const initialState: UsersStateType = {
 const usersReducer = (state: UsersStateType = initialState, action: UsersReducerActionsType): UsersStateType => {
     switch (action.type) {
         case 'mona/soc-net/user-reducer/FOLLOW':
-            debugger
             return {
                 ...state,
-                users: updateObjectInArray(state.users, action.userId, 'id', {followed: true})
+                users: updateObjectInArray(
+                    state.users, action.userId, 'id', {followed: true}
+                )
                 //users: state.users.map(u => u.id === action.userId ? {...u, followed: true} : u)
             }
         case 'mona/soc-net/user-reducer/UNFOLLOW':
-            debugger
             return {
                 ...state,
                 users: updateObjectInArray(state.users, action.userId, 'id', {followed: false})
