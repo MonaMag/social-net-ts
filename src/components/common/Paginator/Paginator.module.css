@@ -1,0 +1,31 @@
+.paginator {
+    display: flex;
+    margin: 5px 0;
+}
+
+.page {
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-right: 4px;
+}
+.page.currentPage {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: coral;
+}
+
+/*.paginatorNumbers {
+    display: flex;
+    justify-content: space-around;
+    width: 400px;
+    height: 21px;
+}*/
+
+/*
+.btn {
+    cursor: pointer;
+    background-color: transparent;
+    border-radius: 10px;
+}
+*/
+

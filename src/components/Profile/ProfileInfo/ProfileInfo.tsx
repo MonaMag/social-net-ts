@@ -11,18 +11,17 @@ type ProfileInfoPropsType = {
     updateUserStatus: (status: string) => void
 }
 
-function ProfileInfo(props: ProfileInfoPropsType) {
-    if (!props.profile) {
+function ProfileInfo({profile, status, updateUserStatus }: ProfileInfoPropsType) {
+    if (!profile) {
         return <Preloader />
     }
     return (
         <div>
-           {/*<img src='https://www.thinkingbusinessblog.com/wp-content/uploads/2014/12/step-up-1000x430.jpg'/>*/}
             <div className={s.descriptionBlock}>
-                <img src={props.profile.photos.large}/>
-                <div>{props.profile.fullName}</div>
-                <div>{props.profile.aboutMe}</div>
-                <ProfileStatusWithHooks status={props.status} updateUserStatus={props.updateUserStatus}/>
+                <img src={profile.photos.large}/>
+                <div>{profile.fullName}</div>
+                <div>{profile.aboutMe}</div>
+                <ProfileStatusWithHooks status={status} updateUserStatus={updateUserStatus}/>
             </div>
         </div>
     );

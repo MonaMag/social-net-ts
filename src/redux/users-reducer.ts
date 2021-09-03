@@ -44,14 +44,18 @@ const initialState: UsersStateType = {
 const usersReducer = (state: UsersStateType = initialState, action: UsersReducerActionsType): UsersStateType => {
     switch (action.type) {
         case 'mona/soc-net/user-reducer/FOLLOW':
+            debugger
             return {
                 ...state,
                 users: updateObjectInArray(state.users, action.userId, 'id', {followed: true})
+                //users: state.users.map(u => u.id === action.userId ? {...u, followed: true} : u)
             }
         case 'mona/soc-net/user-reducer/UNFOLLOW':
+            debugger
             return {
                 ...state,
                 users: updateObjectInArray(state.users, action.userId, 'id', {followed: false})
+                //users: state.users.map(u => u.id === action.userId ? {...u, followed: false} : u)
             }
         case 'mona/soc-net/user-reducer/SET_USERS':
             return {...state, users: action.users}
@@ -77,7 +81,7 @@ const usersReducer = (state: UsersStateType = initialState, action: UsersReducer
 }
 
 
-//* ====== Action Creators =============================================================================>
+//*  Action Creators -------------------------------------------------------------------------------------
 
 export type UsersReducerActionsType = InferActionsTypes<typeof usersActions>
 
@@ -100,7 +104,7 @@ export const usersActions = {
 
 
 
-//* ====== Thunk Creators ===============================================================================>
+//*  Thunk Creators --------------------------------------------------------------------------------------------
 export const getUsers = (currentPage: number, pageSize: number): AppThunkType => {
     return async dispatch => {
         dispatch(usersActions.toggleIsFetching(true));
@@ -109,7 +113,7 @@ export const getUsers = (currentPage: number, pageSize: number): AppThunkType =>
         let data =  await usersAPI.getUsers(currentPage, pageSize)
         dispatch(usersActions.toggleIsFetching(false));
         dispatch(usersActions.setUsers(data.items));
-        dispatch(usersActions.setTotalUsersCount(220));
+        dispatch(usersActions.setTotalUsersCount(data.totalCount));
     }
 }
 
